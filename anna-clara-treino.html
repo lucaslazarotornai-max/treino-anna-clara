@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano de Treino — Anna Clara</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===== TOKENS ===== */
+  :root {
+    --rose:    #E8637A;
+    --rose-lt: #F5A0AF;
+    --rose-bg: #FDE8EC;
+    --sage:    #7BAF8E;
+    --sage-lt: #BDD9C8;
+    --sage-bg: #EAF4EE;
+    --cream:   #FFF7F4;
+    --sand:    #F5EDE8;
+    --ink:     #2C2033;
+    --muted:   #7A6E78;
+    --card:    #FFFFFF;
+    --border:  #EDE3E8;
+    --shadow:  0 2px 16px rgba(44,32,51,.07);
+    --radius:  18px;
+    --font-h:  'Nunito', sans-serif;
+    --font-b:  'DM Sans', sans-serif;
+  }
+
+  /* ===== RESET ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-b);
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  img { max-width: 100%; display: block; }
+  button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+  /* ===== LAYOUT ===== */
+  .app { max-width: 480px; margin: 0 auto; position: relative; }
+
+  /* ===== HEADER ===== */
+  .header {
+    background: linear-gradient(135deg, var(--rose) 0%, #C9485F 100%);
+    color: #fff;
+    padding: 48px 24px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.08);
+    top: -80px; right: -60px;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.06);
+    bottom: -40px; left: -30px;
+  }
+  .header-tag {
+    display: inline-block;
+    background: rgba(255,255,255,.22);
+    border-radius: 40px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .header h1 {
+    font-family: var(--font-h);
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .header h1 span { opacity: .75; font-weight: 700; font-size: 20px; display: block; }
+  .header-sub {
+    font-size: 14px;
+    opacity: .88;
+    margin-bottom: 20px;
+  }
+  .header-stats {
+    display: flex;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+  }
+  .stat-pill {
+    background: rgba(255,255,255,.2);
+    border-radius: 40px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* ===== NAV TABS ===== */
+  .tab-bar {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    border-bottom: 3px solid transparent;
+    transition: color .2s, border-color .2s;
+    white-space: nowrap;
+  }
+  .tab-btn.active {
+    color: var(--rose);
+    border-bottom-color: var(--rose);
+  }
+
+  /* ===== SECTIONS ===== */
+  .section { padding: 24px 16px; display: none; }
+  .section.active { display: block; }
+
+  /* ===== CARD ===== */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+  }
+  .card-title {
+    font-family: var(--font-h);
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title .icon { font-size: 20px; }
+
+  /* ===== OBJETIVO ===== */
+  .objetivo-card {
+    background: linear-gradient(135deg, var(--rose-bg), #fff);
+    border: 1.5px solid var(--rose-lt);
+  }
+  .objetivo-card p { font-size: 14px; color: var(--muted); }
+  .objetivo-card strong { color: var(--rose); }
+
+  /* ===== INFO BOX ===== */
+  .info-box {
+    background: var(--sage-bg);
+    border-left: 4px solid var(--sage);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-top: 12px;
+    font-size: 14px;
+    color: #3a5a46;
+  }
+  .info-box strong { display: block; margin-bottom: 4px; font-size: 15px; }
+
+  /* ===== DICA GRID ===== */
+  .dica-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .dica-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 14px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .dica-item .dica-icon { font-size: 28px; margin-bottom: 8px; }
+  .dica-item h3 { font-family: var(--font-h); font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+  .dica-item p { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  /* ===== TREINO MENU ===== */
+  .treino-menu { display: flex; flex-direction: column; gap: 12px; }
+  .treino-btn {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+    box-shadow: var(--shadow);
+    transition: transform .15s, box-shadow .15s, border-color .15s;
+    width: 100%;
+  }
+  .treino-btn:active { transform: scale(.97); }
+  .treino-btn:hover { border-color: var(--rose-lt); box-shadow: 0 4px 20px rgba(232,99,122,.15); }
+  .treino-num {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--rose-bg);
+    color: var(--rose);
+    font-family: var(--font-h);
+    font-size: 18px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .treino-info { flex: 1; }
+  .treino-info h3 { font-family: var(--font-h); font-size: 14px; font-weight: 800; line-height: 1.2; margin-bottom: 3px; }
+  .treino-info p { font-size: 12px; color: var(--muted); }
+  .treino-arrow { color: var(--muted); font-size: 18px; }
+
+  /* ===== TREINO DETALHE ===== */
+  .treino-header {
+    background: linear-gradient(135deg, var(--rose) 0%, #C9485F 100%);
+    color: #fff;
+    padding: 20px;
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .treino-header::before {
+    content: '';
+    position: absolute;
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.1);
+    top: -50px; right: -30px;
+  }
+  .treino-header h2 { font-family: var(--font-h); font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+  .treino-header p { font-size: 13px; opacity: .88; }
+  .treino-back {
+    background: rgba(255,255,255,.2);
+    border-radius: 8px;
+    color: #fff;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .fase-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-h);
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted);
+    margin: 20px 0 10px;
+  }
+  .fase-label::before, .fase-label::after {
+    content: ''; flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ===== EXERCISE CARD ===== */
+  .ex-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+  .ex-header {
+    padding: 16px 16px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .ex-badge {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--rose-bg);
+    color: var(--rose);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .ex-name { font-family: var(--font-h); font-size: 16px; font-weight: 800; line-height: 1.2; }
+  .ex-muscle { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .ex-image {
+    margin: 12px 16px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--sand);
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .ex-image img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform .3s ease;
+    background: var(--sand);
+  }
+  .ex-image img:hover { transform: scale(1.03); }
+  .ex-image-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(44,32,51,.65));
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 20px 12px 8px;
+  }
+  .ex-image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+  }
+  .ex-image-placeholder span { font-size: 40px; }
+  .ex-image-placeholder p { font-size: 12px; }
+
+  .ex-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin: 0 16px 12px;
+    background: var(--sand);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .ex-stat {
+    padding: 10px 8px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .ex-stat:last-child { border-right: none; }
+  .ex-stat-val { font-family: var(--font-h); font-size: 15px; font-weight: 800; color: var(--rose); }
+  .ex-stat-lbl { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+
+  .ex-body { padding: 0 16px 16px; }
+  .ex-section-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--rose);
+    margin: 12px 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ex-steps { list-style: none; counter-reset: step; }
+  .ex-steps li {
+    counter-increment: step;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 14px;
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ex-steps li:last-child { border-bottom: none; margin-bottom: 0; }
+  .ex-steps li::before {
+    content: counter(step);
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--rose);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .ex-erros {
+    background: #FFF3F5;
+    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1px solid #F5C0CA;
+  }
+  .ex-erros ul { list-style: none; padding: 0; }
+  .ex-erros li { font-size: 13px; padding: 3px 0; display: flex; gap: 8px; align-items: flex-start; }
+  .ex-erros li::before { content: '⚠️'; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+
+  /* ===== CHECKLIST ===== */
+  .checklist-card {
+    background: linear-gradient(135deg, var(--sage-bg), #fff);
+    border: 1.5px solid var(--sage-lt);
+  }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--sage-lt);
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    border: 2px solid var(--sage);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, border-color .2s;
+  }
+  .check-item.checked .check-box {
+    background: var(--sage);
+    border-color: var(--sage);
+  }
+  .check-item.checked .check-box::after {
+    content: '✓';
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+  }
+  .check-item.checked span { text-decoration: line-through; color: var(--muted); }
+
+  /* ===== START BTN ===== */
+  .start-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--rose), #C9485F);
+    color: #fff;
+    border-radius: 14px;
+    padding: 18px;
+    font-family: var(--font-h);
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: .02em;
+    box-shadow: 0 6px 20px rgba(232,99,122,.35);
+    transition: transform .15s, box-shadow .15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  .start-btn:active { transform: scale(.97); box-shadow: 0 2px 8px rgba(232,99,122,.3); }
+
+  /* ===== ACADEMIA SEM MEDO ===== */
+  .medo-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  .medo-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--rose-bg);
+    color: var(--rose);
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .medo-text h3 { font-family: var(--font-h); font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+  .medo-text p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--sand);
+    border-top: 1px solid var(--border);
+    padding: 20px;
+    text-align: center;
+  }
+  .footer p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .footer strong { color: var(--rose); }
+
+  /* ===== BADGE / TAG ===== */
+  .tag {
+    display: inline-block;
+    background: var(--rose-bg);
+    color: var(--rose);
+    border-radius: 40px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  .tag.sage { background: var(--sage-bg); color: var(--sage); }
+
+  /* ===== PROGRESS BAR ===== */
+  .prog-bar-wrap { background: var(--border); border-radius: 40px; height: 8px; margin-top: 8px; }
+  .prog-bar { background: var(--rose); border-radius: 40px; height: 8px; transition: width .4s; }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .section.active > * { animation: fadeUp .3s ease both; }
+  .section.active > *:nth-child(2) { animation-delay: .05s; }
+  .section.active > *:nth-child(3) { animation-delay: .10s; }
+  .section.active > *:nth-child(4) { animation-delay: .15s; }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(44,32,51,.45);
+    z-index: 200;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--card);
+    border-radius: 24px 24px 0 0;
+    padding: 24px 20px 40px;
+    width: 100%;
+    max-width: 480px;
+    animation: slideUp .3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(60px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal h3 { font-family: var(--font-h); font-size: 20px; font-weight: 900; margin-bottom: 8px; }
+  .modal p { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+  .modal-btns { display: flex; flex-direction: column; gap: 10px; }
+  .modal-close {
+    background: var(--sand);
+    color: var(--muted);
+    border-radius: 12px;
+    padding: 14px;
+    font-weight: 700;
+    font-size: 15px;
+    width: 100%;
+  }
+
+  /* ===== TIMER ===== */
+  .timer-bar {
+    display: none;
+    background: var(--rose);
+    color: #fff;
+    padding: 10px 16px;
+    position: fixed;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    z-index: 150;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 15px;
+    border-radius: 16px 16px 0 0;
+  }
+  .timer-bar.visible { display: flex; }
+  .timer-stop {
+    background: rgba(255,255,255,.25);
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-tag">✨ Seu treino personalizado</div>
+    <h1>Anna Clara<span>Plano de Treino</span></h1>
+    <p class="header-sub">Emagrecimento · Fortalecimento · Criação de rotina</p>
+    <div class="header-stats">
+      <div class="stat-pill">💪 Iniciante</div>
+      <div class="stat-pill">🎯 Foco: barriga</div>
+      <div class="stat-pill">⏱ ~1h</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-bar" id="tabBar">
+    <button class="tab-btn active" onclick="showTab('inicio')">Início</button>
+    <button class="tab-btn" onclick="showTab('treinos')">Treinos</button>
+    <button class="tab-btn" onclick="showTab('academia')">Sem Medo</button>
+    <button class="tab-btn" onclick="showTab('checklist')">Checklist</button>
+  </div>
+
+  <!-- ===================== INÍCIO ===================== -->
+  <div class="section active" id="inicio">
+
+    <!-- Objetivo -->
+    <div class="card objetivo-card">
+      <div class="card-title"><span class="icon">🎯</span> Seu objetivo</div>
+      <p>Você está aqui para <strong>emagrecer, fortalecer o corpo e criar uma rotina saudável</strong>. A barriga definida vem como resultado de uma combinação: treino consistente + alimentação adequada + descanso.</p>
+      <div class="info-box">
+        <strong>📌 Sobre perder barriga</strong>
+        Não existe "exercício para secar barriga" diretamente. O que acontece é a <strong>redução geral de gordura corporal</strong>, e o abdômen vai secando junto. O treino de abdômen fortalece os músculos por baixo — a definição vem com o emagrecimento total.
+      </div>
+    </div>
+
+    <!-- Dicas -->
+    <div class="card-title" style="padding: 4px 4px 10px; font-family: var(--font-h); font-size: 15px; font-weight: 800;">
+      <span class="icon">💡</span> Dicas essenciais antes de começar
+    </div>
+    <div class="dica-grid">
+      <div class="dica-item">
+        <div class="dica-icon">🔥</div>
+        <h3>Aquecimento</h3>
+        <p>Sempre comece com 10 min de esteira leve ou elíptico antes de qualquer treino.</p>
+      </div>
+      <div class="dica-item">
+        <div class="dica-icon">🧘</div>
+        <h3>Postura</h3>
+        <p>Costas retas, core ativado. Se não sabe a posição certa, peça para o professor.</p>
+      </div>
+      <div class="dica-item">
+        <div class="dica-icon">💨</div>
+        <h3>Respiração</h3>
+        <p>Expire na força (esforço), inspire na volta. Nunca prenda a respiração.</p>
+      </div>
+      <div class="dica-item">
+        <div class="dica-icon">😴</div>
+        <h3>Descanso</h3>
+        <p>Músculo cresce no descanso! Durma bem e respeite os dias de folga.</p>
+      </div>
+      <div class="dica-item">
+        <div class="dica-icon">💧</div>
+        <h3>Hidratação</h3>
+        <p>Leve garrafinha e beba água antes, durante e depois do treino.</p>
+      </div>
+      <div class="dica-item">
+        <div class="dica-icon">📅</div>
+        <h3>Frequência</h3>
+        <p>3 a 4 vezes por semana é ótimo para iniciante. Consistência é tudo!</p>
+      </div>
+    </div>
+
+    <!-- Sugestão de semana -->
+    <div class="card">
+      <div class="card-title"><span class="icon">📆</span> Sugestão de semana</div>
+      <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">
+        <div style="display:flex; align-items:center; gap:12px; font-size:14px;">
+          <span style="width:80px; font-weight:700; color:var(--rose);">Segunda</span>
+          <span>Treino 1 — Pernas e Glúteos</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px; font-size:14px;">
+          <span style="width:80px; font-weight:700; color:var(--rose);">Terça</span>
+          <span>Treino 3 — Abdômen + Cardio</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px; font-size:14px;">
+          <span style="width:80px; font-weight:700; color:var(--muted);">Quarta</span>
+          <span style="color:var(--muted);">Descanso ou caminhada leve</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px; font-size:14px;">
+          <span style="width:80px; font-weight:700; color:var(--rose);">Quinta</span>
+          <span>Treino 2 — Superior</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px; font-size:14px;">
+          <span style="width:80px; font-weight:700; color:var(--rose);">Sexta</span>
+          <span>Treino 4 — Full Body</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px; font-size:14px;">
+          <span style="width:80px; font-weight:700; color:var(--muted);">Fim de sem.</span>
+          <span style="color:var(--muted);">Descanso ou Treino 5 (leve)</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="start-btn" onclick="showTab('treinos')">
+      💪 Escolher treino de hoje
+    </button>
+  </div>
+
+  <!-- ===================== TREINOS ===================== -->
+  <div class="section" id="treinos">
+    <div id="treinoMenu">
+      <div class="card-title" style="padding: 0 4px 14px; font-family: var(--font-h); font-size: 17px; font-weight: 900;">
+        <span class="icon">🏋️</span> Escolha o treino de hoje
+      </div>
+      <div class="treino-menu">
+        <button class="treino-btn" onclick="showTreino(1)">
+          <div class="treino-num">1</div>
+          <div class="treino-info">
+            <h3>Pernas e Glúteos</h3>
+            <p>🦵 Leg press, extensora, glúteos · ~60 min</p>
+          </div>
+          <span class="treino-arrow">›</span>
+        </button>
+        <button class="treino-btn" onclick="showTreino(2)">
+          <div class="treino-num">2</div>
+          <div class="treino-info">
+            <h3>Superior (Braços, Costas e Peito)</h3>
+            <p>💪 Puxada, remada, rosca, tríceps · ~60 min</p>
+          </div>
+          <span class="treino-arrow">›</span>
+        </button>
+        <button class="treino-btn" onclick="showTreino(3)">
+          <div class="treino-num">3</div>
+          <div class="treino-info">
+            <h3>Abdômen + Cardio + Queima</h3>
+            <p>🔥 Foco em barriga e queima de calorias · ~60 min</p>
+          </div>
+          <span class="treino-arrow">›</span>
+        </button>
+        <button class="treino-btn" onclick="showTreino(4)">
+          <div class="treino-num">4</div>
+          <div class="treino-info">
+            <h3>Corpo Todo (Full Body)</h3>
+            <p>⚡ Um pouco de tudo · ~60 min</p>
+          </div>
+          <span class="treino-arrow">›</span>
+        </button>
+        <button class="treino-btn" onclick="showTreino(5)">
+          <div class="treino-num" style="background:var(--sage-bg); color:var(--sage);">5</div>
+          <div class="treino-info">
+            <h3>Treino Leve / Dia de Adaptação</h3>
+            <p>🌿 Perfeito para os primeiros dias · ~45 min</p>
+          </div>
+          <span class="treino-arrow">›</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TREINO 1 -->
+    <div id="treino1" style="display:none">
+      <button class="treino-back" onclick="voltarMenu()">← Voltar</button>
+      <div class="treino-header">
+        <h2>🦵 Treino 1 — Pernas e Glúteos</h2>
+        <p>Foco: quadríceps, posteriores, glúteos e panturrilha</p>
+      </div>
+
+      <div class="fase-label">🔥 Aquecimento — 10 minutos</div>
+      <!-- Aquecimento card -->
+      <div class="card" style="border-left:4px solid var(--sage);">
+        <div class="card-title"><span class="icon">🚶</span> Aquecimento: Esteira</div>
+        <p style="font-size:14px; color:var(--muted);">Caminhe na esteira por <strong>10 minutos</strong> em velocidade leve (4–5 km/h). Não precisa correr — só esquentar o corpo e ativar a circulação.</p>
+      </div>
+
+      <div class="fase-label">💪 Exercícios Principais</div>
+
+      <!-- Leg Press -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🦵</div>
+          <div>
+            <div class="ex-name">Leg Press</div>
+            <div class="ex-muscle">Aparelho: <strong>Leg Press</strong> · Quadríceps, Glúteos, Posteriores</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Leg_Press_1.jpg" alt="Leg Press" onerror="this.src='https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=70'"><div class="ex-image-label">📷 Leg Press — Aparelho 45°</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">12–15</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">60s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Sente no aparelho e encoste as costas no encosto</li>
+            <li>Coloque os pés na plataforma na largura dos ombros</li>
+            <li>Destrave o aparelho segurando as travas laterais</li>
+            <li>Flexione os joelhos até quase 90° (como sentar numa cadeira)</li>
+            <li>Empurre a plataforma até quase esticar as pernas (não trave o joelho)</li>
+            <li>Volte devagar controlando o movimento</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não deixe os joelhos fecharem para dentro</li>
+              <li>Não trave o joelho quando empurrar (deixe um pouquinho dobrado)</li>
+              <li>Não levante as costas do encosto durante o movimento</li>
+              <li>Escolha um peso que permita fazer todas as reps com boa forma</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cadeira Extensora -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">💺</div>
+          <div>
+            <div class="ex-name">Cadeira Extensora</div>
+            <div class="ex-muscle">Aparelho: <strong>Cadeira Extensora</strong> · Quadríceps (frente da coxa)</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/LegExtensionMachineExercise.JPG" alt="Cadeira Extensora" onerror="this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=70'"><div class="ex-image-label">📷 Cadeira Extensora</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">12–15</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">60s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Sente na cadeira com as costas retas no encosto</li>
+            <li>Ajuste o aparelho: o rolete deve encostar na frente do tornozelo</li>
+            <li>Segure nas alças laterais para estabilizar</li>
+            <li>Levante as pernas até ficar paralelas ao chão (estender os joelhos)</li>
+            <li>Segure 1 segundo no topo</li>
+            <li>Abaixe devagar, sem deixar o peso bater no final</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não use impulso — o movimento deve ser controlado</li>
+              <li>Não deixe o rolete muito acima do tornozelo</li>
+              <li>Não deixe o peso bater com força ao abaixar</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mesa Flexora -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🏋</div>
+          <div>
+            <div class="ex-name">Mesa Flexora</div>
+            <div class="ex-muscle">Aparelho: <strong>Mesa Flexora</strong> · Posteriores de coxa (parte de trás)</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Leg_curl_lying.jpg" alt="Mesa Flexora" onerror="this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=70'"><div class="ex-image-label">📷 Mesa Flexora — Leg Curl</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">12</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">60s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Deite de bruços na máquina (barriga para baixo)</li>
+            <li>Coloque os calcanhares embaixo do rolete</li>
+            <li>Segure nas alças da máquina</li>
+            <li>Dobre os joelhos trazendo os calcanhares em direção ao bumbum</li>
+            <li>Segure 1 segundo no topo</li>
+            <li>Desça devagar e de forma controlada</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não levante o quadril da mesa durante o movimento</li>
+              <li>Não use impulso para subir — controle sempre</li>
+              <li>Não deixe as costas arquearem demais</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Abdutora -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🍑</div>
+          <div>
+            <div class="ex-name">Abdutora (Máquina)</div>
+            <div class="ex-muscle">Aparelho: <strong>Cadeira Abdutora</strong> · Glúteo médio, lateral do quadril</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Leg_adduction_machine.jpg" alt="Cadeira Abdutora" onerror="this.src='https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=70'"><div class="ex-image-label">📷 Cadeira Abdutora</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">15–20</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Sente na cadeira e coloque os joelhos do lado de fora dos roletes</li>
+            <li>Ajuste o aparelho para ficar confortável</li>
+            <li>Abra as pernas empurrando os roletes para fora</li>
+            <li>Segure 1 segundo no ponto aberto</li>
+            <li>Volte devagar sem deixar bater</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não use peso excessivo — sinta o músculo trabalhando</li>
+              <li>Não curve as costas, mantenha a postura reta</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elevação Pélvica -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🍑</div>
+          <div>
+            <div class="ex-name">Elevação Pélvica (Hip Thrust)</div>
+            <div class="ex-muscle">Sem aparelho / com haltere leve · Glúteo máximo</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Barbell_hip_thrust.jpg" alt="Hip Thrust" onerror="this.src='https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=70'"><div class="ex-image-label">📷 Elevação Pélvica — Hip Thrust</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">15</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Deite no chão de costas (usando um colchonete)</li>
+            <li>Dobre os joelhos, pés apoiados no chão na largura dos ombros</li>
+            <li>Braços esticados ao lado do corpo</li>
+            <li>Suba o quadril espremendo o bumbum até formar uma linha reta</li>
+            <li>Segure 2 segundos no topo contraindo o glúteo</li>
+            <li>Desça devagar sem encostar o bumbum no chão</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não arqueie demais as costas — use o glúteo, não a lombar</li>
+              <li>Pés não podem escorregar — coloque firmes no chão</li>
+              <li>Mantenha o pescoço neutro, não force para frente</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panturrilha -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🦶</div>
+          <div>
+            <div class="ex-name">Panturrilha na Máquina</div>
+            <div class="ex-muscle">Aparelho: <strong>Máquina de Panturrilha</strong> · Panturrilha (gastrocnêmio)</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/SeatedCalfRaiseMachineExercise.JPG" alt="Panturrilha Máquina" onerror="this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=70'"><div class="ex-image-label">📷 Panturrilha na Máquina</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">15–20</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Sente na máquina com as almofadas apoiadas nas coxas</li>
+            <li>Apoie a ponta dos pés na plataforma e calcanhares soltos para baixo</li>
+            <li>Suba na ponta dos pés como se fosse pegar algo em um armário alto</li>
+            <li>Segure 1 segundo no topo</li>
+            <li>Desça o calcanhar devagar sentindo o alongamento</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não faça rápido demais — controle é tudo aqui</li>
+              <li>Não dobre os joelhos durante o exercício</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fase-label">🏃 Cardio Final — 20 minutos</div>
+      <div class="card" style="border-left:4px solid var(--rose);">
+        <div class="card-title"><span class="icon">🚴</span> Bicicleta Ergométrica</div>
+        <p style="font-size:14px; color:var(--muted);">Pedale na bicicleta por <strong>20 minutos</strong> em ritmo moderado. A resistência deve ser suficiente para você sentir um esforço leve-moderado (consegue falar frases curtas mas está se esforçando).</p>
+        <div class="info-box" style="margin-top:12px;">💡 Dica: Nos primeiros 5 min vá bem devagar, aumente o ritmo no meio e diminua nos últimos 3 min para o corpo ir desacelerando.</div>
+      </div>
+
+      <div class="fase-label">🧘 Alongamento Final — 5 minutos</div>
+      <div class="card">
+        <div class="card-title"><span class="icon">🧘</span> Alongamentos de pernas</div>
+        <ul style="list-style:none; font-size:14px; display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+          <li>🦵 <strong>Quadríceps:</strong> segure o pé atrás por 30s de cada lado</li>
+          <li>🦵 <strong>Posterior:</strong> estique a perna e alcance o pé por 30s</li>
+          <li>🍑 <strong>Glúteo:</strong> cruce a perna sobre o joelho oposto e pressione por 30s</li>
+          <li>🦶 <strong>Panturrilha:</strong> empurre a parede com o pé esticado por 30s</li>
+        </ul>
+      </div>
+
+      <button class="start-btn" onclick="iniciarTreino('Pernas e Glúteos')">
+        ▶️ Começar Treino
+      </button>
+    </div>
+
+    <!-- TREINO 2 -->
+    <div id="treino2" style="display:none">
+      <button class="treino-back" onclick="voltarMenu()">← Voltar</button>
+      <div class="treino-header">
+        <h2>💪 Treino 2 — Superior</h2>
+        <p>Foco: costas, peito, ombros, bíceps e tríceps</p>
+      </div>
+
+      <div class="fase-label">🔥 Aquecimento — 10 minutos</div>
+      <div class="card" style="border-left:4px solid var(--sage);">
+        <div class="card-title"><span class="icon">🚶</span> Esteira leve</div>
+        <p style="font-size:14px; color:var(--muted);">Caminhada leve na esteira por <strong>10 minutos</strong>, velocidade 4–5 km/h. Aproveite para mobilizar os ombros girando os braços devagar.</p>
+      </div>
+
+      <div class="fase-label">💪 Exercícios Principais</div>
+
+      <!-- Puxada Frontal -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🔙</div>
+          <div>
+            <div class="ex-name">Puxada Frontal</div>
+            <div class="ex-muscle">Aparelho: <strong>Puxada na Polia</strong> · Costas largas (latíssimo)</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lat_pulldown_machine.jpg" alt="Puxada Frontal" onerror="this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=70'"><div class="ex-image-label">📷 Puxada Frontal — Polia Alta</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">12</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">60s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Sente na máquina e ajuste a almofada sobre as coxas</li>
+            <li>Segure a barra larga com as mãos na largura maior que os ombros</li>
+            <li>Incline levemente o tronco para trás (não muito, só um pouco)</li>
+            <li>Puxe a barra em direção ao peito, abrindo os cotovelos para baixo</li>
+            <li>Sinta as costas trabalhando — pense em "esmagar" algo embaixo dos braços</li>
+            <li>Suba a barra devagar de volta</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não balance o tronco — o movimento é dos braços e costas</li>
+              <li>Não puxe com força dos bíceps — foque nas costas</li>
+              <li>Não puxe atrás da cabeça — sempre para a frente/peito</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Remada Máquina -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🚣</div>
+          <div>
+            <div class="ex-name">Remada na Máquina</div>
+            <div class="ex-muscle">Aparelho: <strong>Remada Sentada (polia)</strong> · Costas médias, romboides</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Cable-seated-rows-2.png" alt="Remada Máquina" onerror="this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=70'"><div class="ex-image-label">📷 Remada Sentada — Polia Baixa</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">12</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">60s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Sente na máquina com os pés apoiados nas plataformas</li>
+            <li>Segure o cabo com as duas mãos (alça triangular)</li>
+            <li>Mantenha as costas retas e puxe o cabo em direção à barriga</li>
+            <li>Junte as escápulas (como se fosse apertar um lápis entre as costas)</li>
+            <li>Segure 1 segundo</li>
+            <li>Estenda os braços controladamente de volta</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não balance para trás para puxar mais peso</li>
+              <li>Não arredonde as costas — costas sempre retas</li>
+              <li>Não encolha os ombros durante o movimento</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Supino Máquina -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">💪</div>
+          <div>
+            <div class="ex-name">Supino na Máquina</div>
+            <div class="ex-muscle">Aparelho: <strong>Supino Máquina</strong> · Peitoral, ombro anterior, tríceps</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Chest_press_machine.jpg" alt="Supino Máquina" onerror="this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=70'"><div class="ex-image-label">📷 Supino — Chest Press Máquina</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">12</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">60s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Sente e ajuste o banco para os braços ficarem na altura do peito</li>
+            <li>Segure as alças com as mãos na largura dos ombros</li>
+            <li>Encoste as costas no banco e mantenha firme</li>
+            <li>Empurre as alças para frente até quase esticar os braços</li>
+            <li>Volte devagar sentindo o peitoral alongando</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não deixe os cotovelos abaixarem demais — alinhe com o peito</li>
+              <li>Não trave os cotovelos ao empurrar</li>
+              <li>Não levante as costas do banco</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desenvolvimento Máquina -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🙌</div>
+          <div>
+            <div class="ex-name">Desenvolvimento de Ombros (Máquina)</div>
+            <div class="ex-muscle">Aparelho: <strong>Desenvolvimento Máquina</strong> · Deltoides (ombros)</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Shoulder_press_machine.jpg" alt="Desenvolvimento Ombro" onerror="this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=70'"><div class="ex-image-label">📷 Desenvolvimento — Shoulder Press</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">12</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">60s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Ajuste o assento para as alças ficarem na altura dos ombros</li>
+            <li>Segure as alças e mantenha os cotovelos apontando para os lados</li>
+            <li>Empurre as alças para cima, estendendo os braços</li>
+            <li>Não trave os cotovelos no topo</li>
+            <li>Desça devagar até a posição inicial</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não encolha o pescoço — mantenha ele neutro</li>
+              <li>Não use impulso do tronco para empurrar</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rosca Bíceps -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">💪</div>
+          <div>
+            <div class="ex-name">Rosca Bíceps (Polia ou Haltere)</div>
+            <div class="ex-muscle">Aparelho: <strong>Polia baixa ou haltere</strong> · Bíceps</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Cable_curl.jpg" alt="Rosca Bíceps Polia" onerror="this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=70'"><div class="ex-image-label">📷 Rosca Bíceps na Polia</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">12–15</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Fique em pé ou sente em um banco</li>
+            <li>Segure um haltere em cada mão com a palma virada para cima</li>
+            <li>Cotovelos perto do corpo e fixos</li>
+            <li>Dobre o cotovelo trazendo o peso em direção ao ombro</li>
+            <li>Segure 1 segundo no topo</li>
+            <li>Desça devagar sem jogar o peso</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não balance o tronco para ajudar — o esforço é todo do braço</li>
+              <li>Não deixe os cotovelos abrirem para os lados</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tríceps Polia -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🤙</div>
+          <div>
+            <div class="ex-name">Tríceps Polia (Corda ou Barra)</div>
+            <div class="ex-muscle">Aparelho: <strong>Polia alta</strong> · Tríceps (parte de trás do braço)</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Triceps_pushdown.jpg" alt="Tríceps Polia" onerror="this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=70'"><div class="ex-image-label">📷 Tríceps Polia — Corda ou Barra</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">12–15</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Fique em pé de frente para a polia alta</li>
+            <li>Segure a corda ou barra com as mãos</li>
+            <li>Cotovelos dobrados, perto do corpo e fixos</li>
+            <li>Empurre a corda para baixo até esticar os braços</li>
+            <li>Segure 1 segundo e abra levemente as pontas da corda</li>
+            <li>Suba devagar controlando</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não mova os cotovelos — eles são o ponto fixo do movimento</li>
+              <li>Não incline o tronco para usar mais força</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fase-label">🏃 Cardio Final — 20 minutos</div>
+      <div class="card" style="border-left:4px solid var(--rose);">
+        <div class="card-title"><span class="icon">🏃</span> Elíptico</div>
+        <p style="font-size:14px; color:var(--muted);">Use o elíptico por <strong>20 minutos</strong> — ótimo pois trabalha braços e pernas ao mesmo tempo. Mantenha um ritmo constante e confortável.</p>
+      </div>
+
+      <div class="fase-label">🧘 Alongamento Final</div>
+      <div class="card">
+        <div class="card-title"><span class="icon">🧘</span> Alongamentos de ombros e braços</div>
+        <ul style="list-style:none; font-size:14px; display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+          <li>💪 <strong>Bíceps:</strong> estique o braço para trás e gire a palma para cima · 30s</li>
+          <li>🤙 <strong>Tríceps:</strong> leve o cotovelo atrás da cabeça e pressione · 30s cada</li>
+          <li>🔙 <strong>Costas:</strong> abrace o próprio tronco e arredonde as costas · 30s</li>
+          <li>🙌 <strong>Ombros:</strong> leve o braço cruzado pelo peito e pressione · 30s cada</li>
+        </ul>
+      </div>
+
+      <button class="start-btn" onclick="iniciarTreino('Superior')">
+        ▶️ Começar Treino
+      </button>
+    </div>
+
+    <!-- TREINO 3 -->
+    <div id="treino3" style="display:none">
+      <button class="treino-back" onclick="voltarMenu()">← Voltar</button>
+      <div class="treino-header">
+        <h2>🔥 Treino 3 — Abdômen + Cardio</h2>
+        <p>Foco: queima de calorias, core e região abdominal</p>
+      </div>
+
+      <div class="fase-label">🔥 Aquecimento — 10 minutos</div>
+      <div class="card" style="border-left:4px solid var(--sage);">
+        <div class="card-title"><span class="icon">🏃</span> Esteira com inclinação leve</div>
+        <p style="font-size:14px; color:var(--muted);">Caminhe por <strong>10 minutos</strong> com inclinação leve (1–2%) para aumentar a queima calórica desde o início.</p>
+      </div>
+
+      <div class="fase-label">🔥 Circuito Cardio — 20 minutos</div>
+      <div class="card" style="border-left:4px solid var(--rose);">
+        <div class="card-title"><span class="icon">🔥</span> Circuito de Cardio (3 rodadas)</div>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Faça cada exercício por 1 minuto, descanse 30 segundos e repita 3 vezes:</p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="background:var(--rose-bg); border-radius:10px; padding:12px; display:flex; gap:12px; align-items:center;">
+            <span style="font-size:22px;">🚴</span>
+            <div>
+              <div style="font-weight:700; font-size:14px;">Bicicleta Ergométrica</div>
+              <div style="font-size:12px; color:var(--muted);">1 minuto intensidade moderada-alta</div>
+            </div>
+          </div>
+          <div style="background:var(--rose-bg); border-radius:10px; padding:12px; display:flex; gap:12px; align-items:center;">
+            <span style="font-size:22px;">🏃</span>
+            <div>
+              <div style="font-weight:700; font-size:14px;">Elíptico</div>
+              <div style="font-size:12px; color:var(--muted);">1 minuto ritmo acelerado</div>
+            </div>
+          </div>
+          <div style="background:var(--rose-bg); border-radius:10px; padding:12px; display:flex; gap:12px; align-items:center;">
+            <span style="font-size:22px;">🚶</span>
+            <div>
+              <div style="font-weight:700; font-size:14px;">Esteira — Caminhada rápida</div>
+              <div style="font-size:12px; color:var(--muted);">1 minuto a 5,5–6 km/h</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fase-label">💪 Exercícios de Abdômen</div>
+
+      <!-- Abdominal Máquina -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🤸</div>
+          <div>
+            <div class="ex-name">Abdominal na Máquina</div>
+            <div class="ex-muscle">Aparelho: <strong>Máquina de Abdominal</strong> · Reto abdominal</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Abdominal_crunch_machine.jpg" alt="Abdominal Máquina" onerror="this.src='https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=70'"><div class="ex-image-label">📷 Abdominal — Crunch Máquina</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">15</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Sente na máquina com os pés sob o apoio</li>
+            <li>Coloque as mãos nas alças laterais ou cruzadas no peito</li>
+            <li>Contraia o abdômen e curve o tronco para baixo</li>
+            <li>Não force com o pescoço — o movimento vem da barriga</li>
+            <li>Segure 1 segundo contraído</li>
+            <li>Volte devagar ao ponto inicial</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não jogue a cabeça para frente — use o core, não o pescoço</li>
+              <li>Não use peso demais no começo</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prancha -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🧱</div>
+          <div>
+            <div class="ex-name">Prancha Simples (Isometria)</div>
+            <div class="ex-muscle">Sem aparelho (colchonete) · Core completo, estabilizadores</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Plank_exercise.jpg" alt="Prancha Abdominal" onerror="this.src='https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=70'"><div class="ex-image-label">📷 Prancha — Isometria de Core</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">20–30s</div><div class="ex-stat-lbl">Tempo</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Deite de barriga para baixo no colchonete</li>
+            <li>Apoie nos antebraços (cotovelos embaixo dos ombros) e nas pontas dos pés</li>
+            <li>Levante o corpo como se fosse uma tábua — reto do cabeça ao calcanhar</li>
+            <li>Contraia o abdômen e respire normalmente</li>
+            <li>Segure o tempo indicado</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não deixe o quadril cair ou subir demais — mantenha a linha reta</li>
+              <li>Não prenda a respiração — respire normalmente</li>
+              <li>Se for difícil, pode apoiar nos joelhos no começo</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elevação de Pernas -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🦵</div>
+          <div>
+            <div class="ex-name">Elevação de Pernas Deitada</div>
+            <div class="ex-muscle">Colchonete · Abdômen inferior, flexores de quadril</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lying_leg_raise.jpg" alt="Elevação de Pernas" onerror="this.src='https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=70'"><div class="ex-image-label">📷 Elevação de Pernas Deitada</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">12</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Deite de costas no colchonete</li>
+            <li>Mãos embaixo do bumbum para proteger a lombar</li>
+            <li>Pernas juntas e levemente dobradas (não totalmente retas)</li>
+            <li>Levante as pernas até 90° do chão</li>
+            <li>Desça devagar sem encostar os pés no chão</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não deixe a lombar descolar do chão durante o movimento</li>
+              <li>Não jogue as pernas — controle sempre a descida</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bicicleta Abdominal -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🚲</div>
+          <div>
+            <div class="ex-name">Bicicleta Abdominal</div>
+            <div class="ex-muscle">Colchonete · Oblíquos, abdômen total</div>
+          </div>
+        </div>
+        <div class="ex-image">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bicycle_crunch.jpg" alt="Bicicleta Abdominal" onerror="this.src='https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=70'"><div class="ex-image-label">📷 Bicicleta Abdominal</div></div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">20</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Deite de costas, mãos atrás da cabeça (sem puxar o pescoço)</li>
+            <li>Levante levemente a cabeça e ombros do chão</li>
+            <li>Pernas levantadas e dobradas no ar</li>
+            <li>Leve o cotovelo direito ao joelho esquerdo enquanto estende a perna direita</li>
+            <li>Alterne lado a lado em movimento de pedalada</li>
+            <li>Faça devagar e com controle — não é uma corrida</li>
+          </ol>
+          <div class="ex-section-title" style="margin-top:14px;">⚠️ Erros para evitar</div>
+          <div class="ex-erros">
+            <ul>
+              <li>Não puxe o pescoço com as mãos — ele vai junto, não empurra</li>
+              <li>Não faça rápido demais — lento e controlado ativa mais</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fase-label">🧘 Alongamento Final</div>
+      <div class="card">
+        <div class="card-title"><span class="icon">🧘</span> Alongamentos de core e coluna</div>
+        <ul style="list-style:none; font-size:14px; display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+          <li>🧘 <strong>Gato/Vaca:</strong> de 4 apoios, curve e arqueie as costas alternando · 30s</li>
+          <li>🌙 <strong>Posição fetal:</strong> deite de lado e abrace os joelhos · 30s cada lado</li>
+          <li>⬆️ <strong>Extensão de coluna:</strong> deite de barriga e levante o tronco apoiando os cotovelos · 30s</li>
+        </ul>
+      </div>
+
+      <button class="start-btn" onclick="iniciarTreino('Abdômen + Cardio')">
+        ▶️ Começar Treino
+      </button>
+    </div>
+
+    <!-- TREINO 4 -->
+    <div id="treino4" style="display:none">
+      <button class="treino-back" onclick="voltarMenu()">← Voltar</button>
+      <div class="treino-header">
+        <h2>⚡ Treino 4 — Full Body</h2>
+        <p>Foco: corpo inteiro em uma sessão, eficiência máxima</p>
+      </div>
+
+      <div class="fase-label">🔥 Aquecimento — 10 minutos</div>
+      <div class="card" style="border-left:4px solid var(--sage);">
+        <div class="card-title"><span class="icon">🚴</span> Bicicleta leve</div>
+        <p style="font-size:14px; color:var(--muted);">Pedale na bicicleta por <strong>10 minutos</strong> em ritmo leve para ativar todo o corpo.</p>
+      </div>
+
+      <div class="fase-label">💪 Exercícios Principais — Full Body</div>
+
+      <div class="info-box" style="margin-bottom:16px;">
+        <strong>📌 Sobre o Full Body</strong>
+        Neste treino você trabalha o corpo inteiro em uma sessão. Faça os exercícios em ordem, descanse entre as séries e foque na qualidade do movimento.
+      </div>
+
+      <!-- Leg Press -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🦵</div>
+          <div>
+            <div class="ex-name">Leg Press (Pernas)</div>
+            <div class="ex-muscle">Aparelho: Leg Press · Quadríceps, Glúteos, Posteriores</div>
+          </div>
+        </div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">12</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">60s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Sente no aparelho e coloque os pés na plataforma na largura dos ombros</li>
+            <li>Destrave o aparelho, dobre os joelhos até ~90°</li>
+            <li>Empurre a plataforma sem travar o joelho</li>
+            <li>Volte controlado — repita 12 vezes</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Puxada Frontal -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🔙</div>
+          <div>
+            <div class="ex-name">Puxada Frontal (Costas)</div>
+            <div class="ex-muscle">Aparelho: Polia Alta · Costas largas, bíceps</div>
+          </div>
+        </div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">12</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">60s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Sente sob a polia e ajuste a almofada nas coxas</li>
+            <li>Segure a barra larga e incline levemente o tronco para trás</li>
+            <li>Puxe a barra até o peito, abrindo os cotovelos para baixo</li>
+            <li>Suba devagar de volta controlando o movimento</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Supino Máquina -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">💪</div>
+          <div>
+            <div class="ex-name">Supino Máquina (Peito)</div>
+            <div class="ex-muscle">Aparelho: Supino Máquina · Peitoral, tríceps</div>
+          </div>
+        </div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">12</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">60s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Ajuste o banco — alças na altura do peito</li>
+            <li>Costas firmes no encosto, empurre para frente</li>
+            <li>Desça devagar sentindo o peito alongar</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Elevação Pélvica -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🍑</div>
+          <div>
+            <div class="ex-name">Elevação Pélvica (Glúteos)</div>
+            <div class="ex-muscle">Colchonete · Glúteo máximo</div>
+          </div>
+        </div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">15</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Deite de costas, joelhos dobrados, pés no chão</li>
+            <li>Suba o quadril espremendo o glúteo — linha reta do joelho ao ombro</li>
+            <li>Segure 2 segundos e desça sem encostar no chão</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Prancha -->
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🧱</div>
+          <div>
+            <div class="ex-name">Prancha (Core)</div>
+            <div class="ex-muscle">Colchonete · Abdômen, core, estabilizadores</div>
+          </div>
+        </div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">3</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">25s</div><div class="ex-stat-lbl">Tempo</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-section-title">📋 Como fazer</div>
+          <ol class="ex-steps">
+            <li>Antebraços no chão, pontas dos pés apoiadas</li>
+            <li>Corpo reto como uma tábua — não deixe o quadril cair</li>
+            <li>Contraia o abdômen e respire devagar</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="fase-label">🏃 Cardio Final — 15 minutos</div>
+      <div class="card" style="border-left:4px solid var(--rose);">
+        <div class="card-title"><span class="icon">🏃</span> Esteira — Ritmo moderado</div>
+        <p style="font-size:14px; color:var(--muted);">Caminhe rápido ou corra levemente por <strong>15 minutos</strong>. Você já trabalhou bastante o corpo — aproveite para queimar um pouco mais.</p>
+      </div>
+
+      <div class="fase-label">🧘 Alongamento Final</div>
+      <div class="card">
+        <div class="card-title"><span class="icon">🧘</span> Alongamento geral</div>
+        <ul style="list-style:none; font-size:14px; display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+          <li>🦵 Quadríceps: segure o pé atrás · 30s cada</li>
+          <li>🔙 Costas: abrace o próprio corpo · 30s</li>
+          <li>💪 Ombros: braço cruzado no peito · 30s cada</li>
+          <li>🧘 Posição da criança: sente nos calcanhares e estique os braços à frente · 40s</li>
+        </ul>
+      </div>
+
+      <button class="start-btn" onclick="iniciarTreino('Full Body')">
+        ▶️ Começar Treino
+      </button>
+    </div>
+
+    <!-- TREINO 5 -->
+    <div id="treino5" style="display:none">
+      <button class="treino-back" onclick="voltarMenu()">← Voltar</button>
+      <div class="treino-header" style="background: linear-gradient(135deg, var(--sage) 0%, #5a8f6e 100%);">
+        <h2>🌿 Treino 5 — Leve / Adaptação</h2>
+        <p>Perfeito para os primeiros dias ou quando estiver cansada</p>
+      </div>
+
+      <div class="info-box" style="margin-bottom:16px;">
+        <strong>🌿 Para que serve este treino?</strong>
+        Este é o treino para os primeiros dias na academia, para quando você está com o corpo dolorido, cansada ou só quer manter o ritmo sem se esforçar muito. Sem pressão — movimento é movimento!
+      </div>
+
+      <div class="fase-label">🔥 Aquecimento — 10 minutos</div>
+      <div class="card" style="border-left:4px solid var(--sage);">
+        <div class="card-title"><span class="icon">🚶</span> Caminhada tranquila</div>
+        <p style="font-size:14px; color:var(--muted);">Caminhe na esteira em ritmo bem leve, 3–4 km/h, por <strong>10 minutos</strong>. Pode colocar música e curtir.</p>
+      </div>
+
+      <div class="fase-label">🌿 Exercícios Leves — 2 séries cada</div>
+
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🍑</div>
+          <div>
+            <div class="ex-name">Abdutora (Leve)</div>
+            <div class="ex-muscle">Cadeira Abdutora · 2 séries de 20 repetições</div>
+          </div>
+        </div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">2</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">20</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <p style="font-size:14px; color:var(--muted);">Use um peso leve, foque em sentir o glúteo. Movimento lento e controlado.</p>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🦵</div>
+          <div>
+            <div class="ex-name">Cadeira Extensora (Leve)</div>
+            <div class="ex-muscle">Cadeira Extensora · 2 séries de 15 repetições</div>
+          </div>
+        </div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">2</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">15</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <p style="font-size:14px; color:var(--muted);">Peso bem leve. O objetivo aqui é aprender o movimento, não se cansar.</p>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🧱</div>
+          <div>
+            <div class="ex-name">Prancha (Adaptação)</div>
+            <div class="ex-muscle">Colchonete · 2 séries de 15 segundos</div>
+          </div>
+        </div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">2</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">15s</div><div class="ex-stat-lbl">Tempo</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <p style="font-size:14px; color:var(--muted);">Pode fazer apoiada nos joelhos se quiser. O importante é manter a posição.</p>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-header">
+          <div class="ex-badge">🍑</div>
+          <div>
+            <div class="ex-name">Elevação Pélvica</div>
+            <div class="ex-muscle">Colchonete · 2 séries de 15 repetições</div>
+          </div>
+        </div>
+        <div class="ex-stats">
+          <div class="ex-stat"><div class="ex-stat-val">2</div><div class="ex-stat-lbl">Séries</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">15</div><div class="ex-stat-lbl">Repetições</div></div>
+          <div class="ex-stat"><div class="ex-stat-val">45s</div><div class="ex-stat-lbl">Descanso</div></div>
+        </div>
+        <div class="ex-body">
+          <p style="font-size:14px; color:var(--muted);">Sem peso. Foco total em contrair o glúteo no topo do movimento.</p>
+        </div>
+      </div>
+
+      <div class="fase-label">🏃 Cardio Leve — 20 minutos</div>
+      <div class="card" style="border-left:4px solid var(--sage);">
+        <div class="card-title"><span class="icon">🚴</span> Bicicleta Ergométrica — ritmo confortável</div>
+        <p style="font-size:14px; color:var(--muted);">Pedale por <strong>20 minutos</strong> em um ritmo que você consiga conversar normalmente. Sem pressa.</p>
+      </div>
+
+      <div class="fase-label">🧘 Alongamento Completo</div>
+      <div class="card">
+        <div class="card-title"><span class="icon">🧘</span> 5 minutos de alongamento</div>
+        <ul style="list-style:none; font-size:14px; display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+          <li>🦵 Pernas esticadas no chão · 30s cada</li>
+          <li>🔙 Giro de tronco sentada · 30s cada lado</li>
+          <li>🍑 Glúteo cruzando a perna · 30s cada</li>
+          <li>💆 Pescoço: incline para cada lado devagar · 20s cada</li>
+        </ul>
+      </div>
+
+      <button class="start-btn" style="background: linear-gradient(135deg, var(--sage), #5a8f6e); box-shadow: 0 6px 20px rgba(123,175,142,.35);" onclick="iniciarTreino('Treino Leve')">
+        ▶️ Começar Treino
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================== ACADEMIA SEM MEDO ===================== -->
+  <div class="section" id="academia">
+    <div class="card-title" style="padding: 0 4px 16px; font-family: var(--font-h); font-size: 17px; font-weight: 900;">
+      <span class="icon">😊</span> Academia sem medo
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📋</span> Chegue sabendo o que fazer</div>
+      <div class="medo-item">
+        <div class="medo-icon">📱</div>
+        <div class="medo-text">
+          <h3>Venha com o plano no celular</h3>
+          <p>Abra esse app antes de entrar na academia. Já vai saber exatamente quais aparelhos usar, quantas séries e o que fazer em cada momento. Sem ficar olhando em volta perdida.</p>
+        </div>
+      </div>
+      <div class="medo-item">
+        <div class="medo-icon">⏱</div>
+        <div class="medo-text">
+          <h3>Organize seu tempo</h3>
+          <p>10 min aquecimento → ~30 min exercícios → 15–20 min cardio → 5 min alongamento. Simples assim.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">⚙️</span> Como ajustar as máquinas</div>
+      <div class="medo-item">
+        <div class="medo-icon">📐</div>
+        <div class="medo-text">
+          <h3>Ajuste antes de começar</h3>
+          <p>Quase todo aparelho tem um pino ou alavanca para ajustar o banco, o encosto ou o rolete. Mexa até ficar confortável e alinhada. Se precisar, peça para o professor da academia — é para isso que ele está lá, sem julgamentos!</p>
+        </div>
+      </div>
+      <div class="medo-item">
+        <div class="medo-icon">✅</div>
+        <div class="medo-text">
+          <h3>Teste antes de puxar</h3>
+          <p>Antes de fazer a série, faça 2–3 repetições bem leves só para ver se o aparelho está certo para o seu corpo.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">⚖️</span> Como escolher o peso certo</div>
+      <div class="medo-item">
+        <div class="medo-icon">🎯</div>
+        <div class="medo-text">
+          <h3>A regra das últimas repetições</h3>
+          <p>O peso certo é aquele que faz as <strong>últimas 2–3 repetições</strong> da série serem difíceis, mas não impossíveis. Se terminar fácil demais, aumenta. Se não conseguir terminar, diminui.</p>
+        </div>
+      </div>
+      <div class="medo-item">
+        <div class="medo-icon">🌱</div>
+        <div class="medo-text">
+          <h3>Comece sempre leve</h3>
+          <p>Nos primeiros dias, use o peso mínimo. O objetivo é aprender o movimento com perfeição. Depois de 2 semanas você já vai naturalmente querer aumentar.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📈</span> Quando aumentar o peso?</div>
+      <div class="info-box">
+        <strong>A regra simples:</strong>
+        Se você conseguiu fazer <strong>todas as séries e repetições</strong> com boa forma e ainda sobrou energia — na próxima semana, aumente o peso em um nível (geralmente 2kg a mais).
+      </div>
+      <ul style="list-style:none; margin-top:12px; display:flex; flex-direction:column; gap:10px;">
+        <li style="display:flex; gap:10px; font-size:14px; align-items:flex-start;">
+          <span style="color:var(--sage); font-size:18px;">✓</span>
+          <span>Fez tudo bem? Aumenta na semana que vem.</span>
+        </li>
+        <li style="display:flex; gap:10px; font-size:14px; align-items:flex-start;">
+          <span style="color:var(--rose); font-size:18px;">✗</span>
+          <span>Ainda difícil? Mantém o mesmo peso mais uma semana.</span>
+        </li>
+        <li style="display:flex; gap:10px; font-size:14px; align-items:flex-start;">
+          <span style="color:var(--muted); font-size:18px;">→</span>
+          <span>A progressão é individual — sem comparar com ninguém!</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">😓</span> E se estiver muito cansada?</div>
+      <div class="medo-item">
+        <div class="medo-icon">💆</div>
+        <div class="medo-text">
+          <h3>Está bem parar quando necessário</h3>
+          <p>Se sentir tontura, falta de ar excessiva ou dor sharp (diferente de queimação de músculo) — pare, beba água e descanse. Não há vergonha nisso.</p>
+        </div>
+      </div>
+      <div class="medo-item">
+        <div class="medo-icon">🌿</div>
+        <div class="medo-text">
+          <h3>Opção: Faça o Treino 5</h3>
+          <p>Em dias ruins, vá para o Treino 5 (leve). Qualquer movimento é melhor que zero. Seu corpo vai agradecer.</p>
+        </div>
+      </div>
+      <div class="medo-item">
+        <div class="medo-icon">💧</div>
+        <div class="medo-text">
+          <h3>Hidrate sempre</h3>
+          <p>Cansaço excessivo muitas vezes é falta de água. Beba pelo menos um copo antes de treinar, e siga bebendo durante.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, var(--rose-bg), #fff); border: 1.5px solid var(--rose-lt);">
+      <div class="card-title"><span class="icon">💬</span> Lembre disso sempre</div>
+      <p style="font-size:15px; line-height:1.7; color:var(--ink);">
+        Todo mundo que está na academia já foi iniciante algum dia. <strong>Ninguém vai te julgar.</strong> O foco de cada pessoa lá dentro é ela mesma. 
+        <br><br>
+        Você não precisa ir perfeitamente — precisa ir <strong>consistentemente</strong>. 3x por semana durante 3 meses vai transformar seu corpo e sua autoconfiança. 💕
+      </p>
+    </div>
+  </div>
+
+  <!-- ===================== CHECKLIST ===================== -->
+  <div class="section" id="checklist">
+    <div class="card-title" style="padding: 0 4px 16px; font-family: var(--font-h); font-size: 17px; font-weight: 900;">
+      <span class="icon">✅</span> Checklist do treino
+    </div>
+
+    <div class="card" style="margin-bottom:8px;">
+      <p style="font-size:13px; color:var(--muted);">Toque em cada item para marcar como feito. Sinta o prazer de completar o treino! 🎉</p>
+    </div>
+
+    <div class="card checklist-card" id="checklistCard">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <span>🔥 Fiz o aquecimento (10 min)</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <span>🏋️ Fiz todos os exercícios do dia</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <span>💧 Bebi água durante o treino</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <span>🏃 Fiz o cardio final</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <span>🧘 Fiz o alongamento final</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <span>💪 Me senti bem hoje!</span>
+      </div>
+    </div>
+
+    <div id="progressSection" style="margin-top:4px; display:none;">
+      <div class="card" style="background: linear-gradient(135deg, var(--sage-bg), #fff); border: 1.5px solid var(--sage-lt);">
+        <div class="card-title"><span class="icon">📊</span> Progresso do treino</div>
+        <div id="progressText" style="font-size:14px; color:var(--muted); margin:6px 0 8px;"></div>
+        <div class="prog-bar-wrap">
+          <div class="prog-bar" id="progressBar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="completionMsg" style="display:none;">
+      <div class="card" style="background: linear-gradient(135deg, var(--rose-bg), #fff); border: 1.5px solid var(--rose-lt); text-align:center; padding: 28px 20px;">
+        <div style="font-size:48px; margin-bottom:12px;">🎉</div>
+        <div style="font-family: var(--font-h); font-size:20px; font-weight:900; color:var(--rose); margin-bottom:8px;">Treino completo!</div>
+        <p style="font-size:14px; color:var(--muted); line-height:1.6;">Você arrasou, Anna Clara! Cada treino é um passo em direção ao seu objetivo. Continue assim! 💕</p>
+      </div>
+    </div>
+
+    <button class="start-btn" onclick="resetChecklist()" style="margin-top:8px; background: var(--sand); color: var(--muted); box-shadow: none;">
+      🔄 Resetar para novo treino
+    </button>
+
+    <!-- Frequência -->
+    <div class="card" style="margin-top:8px;">
+      <div class="card-title"><span class="icon">📅</span> Minha frequência</div>
+      <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Toque nos dias que você treinou essa semana:</p>
+      <div style="display:flex; gap:8px; justify-content:space-between;">
+        <div class="day-btn" onclick="toggleDay(this)" data-day="S" style="flex:1; text-align:center; padding:10px 4px; border-radius:10px; background:var(--sand); font-size:12px; font-weight:700; cursor:pointer; color:var(--muted); transition:.2s;">
+          Seg
+        </div>
+        <div class="day-btn" onclick="toggleDay(this)" data-day="T" style="flex:1; text-align:center; padding:10px 4px; border-radius:10px; background:var(--sand); font-size:12px; font-weight:700; cursor:pointer; color:var(--muted); transition:.2s;">
+          Ter
+        </div>
+        <div class="day-btn" onclick="toggleDay(this)" data-day="Q" style="flex:1; text-align:center; padding:10px 4px; border-radius:10px; background:var(--sand); font-size:12px; font-weight:700; cursor:pointer; color:var(--muted); transition:.2s;">
+          Qua
+        </div>
+        <div class="day-btn" onclick="toggleDay(this)" data-day="Q2" style="flex:1; text-align:center; padding:10px 4px; border-radius:10px; background:var(--sand); font-size:12px; font-weight:700; cursor:pointer; color:var(--muted); transition:.2s;">
+          Qui
+        </div>
+        <div class="day-btn" onclick="toggleDay(this)" data-day="S2" style="flex:1; text-align:center; padding:10px 4px; border-radius:10px; background:var(--sand); font-size:12px; font-weight:700; cursor:pointer; color:var(--muted); transition:.2s;">
+          Sex
+        </div>
+        <div class="day-btn" onclick="toggleDay(this)" data-day="S3" style="flex:1; text-align:center; padding:10px 4px; border-radius:10px; background:var(--sand); font-size:12px; font-weight:700; cursor:pointer; color:var(--muted); transition:.2s;">
+          Sáb
+        </div>
+        <div class="day-btn" onclick="toggleDay(this)" data-day="D" style="flex:1; text-align:center; padding:10px 4px; border-radius:10px; background:var(--sand); font-size:12px; font-weight:700; cursor:pointer; color:var(--muted); transition:.2s;">
+          Dom
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p><strong>⚠️ Observação importante</strong><br>Este plano é uma sugestão geral de treino e deve ser ajustado por um profissional de educação física caso necessário. Consulte sempre um especialista antes de iniciar qualquer programa de exercícios.</p>
+    <p style="margin-top:8px; font-size:11px;">💕 Feito com carinho para Anna Clara</p>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>⏱ Cronômetro iniciado!</h3>
+    <p>Seu treino de <strong id="modalTreinoName"></strong> está em andamento. Foco, consistência e vai com tudo! 💪</p>
+    <div class="modal-btns">
+      <button class="start-btn" style="margin:0;" onclick="closeModal()">✓ Entendido, vou treinar!</button>
+      <button class="modal-close" onclick="closeModal()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TIMER BAR -->
+<div class="timer-bar" id="timerBar">
+  <div>
+    <div style="font-size:11px; opacity:.8;">⏱ Treino em andamento</div>
+    <div id="timerDisplay" style="font-size:20px; font-weight:900;">00:00</div>
+  </div>
+  <button class="timer-stop" onclick="stopTimer()">Encerrar</button>
+</div>
+
+<script>
+  // ===== TABS =====
+  function showTab(tabId) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    const btns = document.querySelectorAll('.tab-btn');
+    const map = { inicio: 0, treinos: 1, academia: 2, checklist: 3 };
+    if (btns[map[tabId]]) btns[map[tabId]].classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ===== TREINOS =====
+  function showTreino(n) {
+    document.getElementById('treinoMenu').style.display = 'none';
+    for(let i = 1; i <= 5; i++) {
+      const el = document.getElementById('treino' + i);
+      if(el) el.style.display = 'none';
+    }
+    document.getElementById('treino' + n).style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function voltarMenu() {
+    document.getElementById('treinoMenu').style.display = 'block';
+    for(let i = 1; i <= 5; i++) {
+      const el = document.getElementById('treino' + i);
+      if(el) el.style.display = 'none';
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ===== TIMER =====
+  let timerInterval = null;
+  let timerSeconds = 0;
+
+  function iniciarTreino(nome) {
+    document.getElementById('modalTreinoName').textContent = nome;
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    startTimer();
+  }
+
+  function startTimer() {
+    if(timerInterval) clearInterval(timerInterval);
+    timerSeconds = 0;
+    document.getElementById('timerBar').classList.add('visible');
+    timerInterval = setInterval(() => {
+      timerSeconds++;
+      const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+      const s = (timerSeconds % 60).toString().padStart(2, '0');
+      document.getElementById('timerDisplay').textContent = m + ':' + s;
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if(timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+    document.getElementById('timerBar').classList.remove('visible');
+  }
+
+  // ===== CHECKLIST =====
+  function toggleCheck(item) {
+    item.classList.toggle('checked');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const items = document.querySelectorAll('.check-item');
+    const checked = document.querySelectorAll('.check-item.checked').length;
+    const total = items.length;
+    const pct = Math.round((checked / total) * 100);
+
+    document.getElementById('progressSection').style.display = 'block';
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressText').textContent = checked + ' de ' + total + ' itens concluídos (' + pct + '%)';
+
+    if(checked === total) {
+      document.getElementById('completionMsg').style.display = 'block';
+    } else {
+      document.getElementById('completionMsg').style.display = 'none';
+    }
+  }
+
+  function resetChecklist() {
+    document.querySelectorAll('.check-item').forEach(i => i.classList.remove('checked'));
+    document.getElementById('progressSection').style.display = 'none';
+    document.getElementById('completionMsg').style.display = 'none';
+  }
+
+  // ===== DAY TRACKER =====
+  function toggleDay(el) {
+    const active = el.style.background === 'rgb(232, 99, 122)';
+    if(active) {
+      el.style.background = 'var(--sand)';
+      el.style.color = 'var(--muted)';
+    } else {
+      el.style.background = 'var(--rose)';
+      el.style.color = '#fff';
+    }
+  }
+
+  // ===== CLOSE MODAL ON OVERLAY CLICK =====
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if(e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
